@@ -1,0 +1,134 @@
+/* ==========================================
+ * Typora Theme: Resume Blue (1:1 PDF Consistency)
+ * ========================================== */
+
+/* 1. 强制浏览器/导出引擎保留背景色与比例 */
+html, body, #write, * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-sizing: border-box !important;
+}
+
+/* 2. 编辑区样式 (普通模式，非 A4 模拟，方便打字) */
+#write {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 60px;
+    font-family: "Times New Roman", "Microsoft YaHei", sans-serif;
+    color: #333;
+    line-height: 1.5;
+    background: #fff;
+}
+
+/* 3. 核心排版元素 (正文与列表) */
+#write p, #write li, #write table td {
+    font-size: 10pt !important;
+    line-height: 1.5 !important;
+    margin: 0 0 6pt 0 !important; /* 统一段落间距 */
+    word-break: break-word;
+}
+
+/* 4. 标题样式 */
+#write h1 {
+    font-size: 20pt !important;
+    font-weight: bold;
+    margin: 0 0 10pt 0 !important;
+    padding: 0;
+}
+
+/* 二级标题：左竖条 + 文字块 + 延长线 */
+#write h2 {
+    display: inline-block !important;
+    position: relative !important;
+    background-color: #3b4b6b !important;
+    color: #ffffff !important;
+    font-size: 11pt !important; /* 标题比正文略大 */
+    font-weight: bold !important;
+    padding: 3pt 12pt !important;
+    margin: 15pt 0 10pt 12pt !important; /* 左间距留给小竖条 */
+    border: none !important;
+    width: fit-content !important;
+    width: -webkit-fit-content !important;
+}
+
+/* 左侧独立小竖条 */
+#write h2::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -12pt !important;
+    width: 5pt !important;
+    height: 100% !important;
+    background-color: #3b4b6b !important;
+}
+
+/* 右侧灰色延长线 */
+#write h2::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 100% !important;
+    margin-left: 6pt !important;
+    width: 1000pt !important; /* 足够长 */
+    height: 1pt !important;
+    background-color: #ddd !important;
+}
+
+#write h3 {
+    font-size: 11pt !important;
+    font-weight: bold;
+    margin: 10pt 0 4pt 0 !important;
+}
+
+/* 5. 列表与表格逻辑 */
+#write ul {
+    padding-left: 18pt !important;
+    margin-bottom: 8pt !important;
+}
+
+#write li {
+    margin-bottom: 2pt !important;
+}
+
+#write table {
+    width: 100% !important;
+    border: none !important;
+    margin-bottom: 10pt !important;
+}
+
+#write table td {
+    padding: 2pt 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* 两端对齐：首列靠左，尾列靠右 */
+#write table tr td:first-child { text-align: left; }
+#write table tr td:last-child { text-align: right; }
+
+/* ==========================================
+   6. PDF 导出专属 (强制 A4 页面渲染)
+   ========================================== */
+@media print {
+    @page {
+        size: A4;
+        margin: 15mm 15mm; /* 物理页边距 */
+    }
+
+    #write {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-size: 10pt !important;
+    }
+
+    /* 再次强制 H2 在 PDF 中保持 inline-block，防止铺满 */
+    #write h2 {
+        display: inline-block !important;
+        width: fit-content !important;
+        width: -webkit-fit-content !important;
+        /* 避免标题被分割到两页 */
+        page-break-after: avoid;
+    }
+}
